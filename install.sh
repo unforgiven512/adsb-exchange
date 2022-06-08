@@ -27,6 +27,15 @@ if ! command -v git &>/dev/null || ! command -v wget &>/dev/null || ! command -v
 	fi
 fi
 
+if ! command -v whiptail &>/dev/null; then
+	if command -v pacman &>/dev/null; then
+		pacman -Sy || true
+		pacman -S --noconfirm libnewt || true
+	else
+		echo -e "\033[1m--- ERROR: could not install \033[34;1mwhiptail\033[0m \033[1mcommand for your distribution... ---\033[0m\n\n" 1>&2
+		return 1
+	fi
+fi
 
 function getGIT() {
 	# getGIT $REPO $BRANCH $TARGET (directory)
